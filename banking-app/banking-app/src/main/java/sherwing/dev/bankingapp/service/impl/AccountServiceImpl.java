@@ -7,6 +7,9 @@ import sherwing.dev.bankingapp.mapper.AccountMapper;
 import sherwing.dev.bankingapp.repository.AccountRepository;
 import sherwing.dev.bankingapp.service.AccountService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 //service anotation automatically create springbean - manage object
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -49,5 +52,18 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(total);
         Account saveBalance = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(saveBalance);
+    }
+
+    @Override
+    public List<AccountDto> getAllAccount() {
+        List<Account> accounts = accountRepository.findAll();
+        return accounts.stream().map((account) -> AccountMapper.mapToAccountDto(account)).collect(Collectors.toList());
+    }
+
+    @Override
+    public AccountDto delAccount(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("account does not exists"));
+        accountRepository.deleteById(id);
+        return AccountMapper.mapToAccountDto(account);
     }
 }

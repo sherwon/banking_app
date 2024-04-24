@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sherwing.dev.bankingapp.dto.AccountDto;
+import sherwing.dev.bankingapp.entity.Account;
 import sherwing.dev.bankingapp.service.AccountService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,6 +32,22 @@ public class AccountController {
     public ResponseEntity<AccountDto> deposite (@PathVariable  Long id, @RequestBody Map<String, Double> req) {
        double amount = req.get("amount");
         AccountDto accountDto = accountService.deposite(id, amount);
+        return ResponseEntity.ok(accountDto);
+    }
+    @PutMapping("/{id}/withdraw")
+    public  ResponseEntity<AccountDto>  withdraw(@PathVariable  Long id, @RequestBody Map<String, Double> req) {
+        double amount = req.get("amount");
+        AccountDto accountDto = accountService.widthDraw(id, amount);
+        return ResponseEntity.ok(accountDto);
+    }
+    @GetMapping("/all-accounts")
+    public ResponseEntity<List<AccountDto>> getAllAccount() {
+        List<AccountDto> accounts =  accountService.getAllAccount();
+        return  ResponseEntity.ok(accounts);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AccountDto> delAccount(@PathVariable Long id) {
+        AccountDto accountDto = accountService.delAccount(id);
         return ResponseEntity.ok(accountDto);
     }
 }
