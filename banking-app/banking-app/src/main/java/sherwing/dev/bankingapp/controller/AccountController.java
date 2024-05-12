@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sherwing.dev.bankingapp.dto.AccountDto;
-import sherwing.dev.bankingapp.entity.Account;
 import sherwing.dev.bankingapp.service.AccountService;
 
 import java.util.List;
